@@ -1,0 +1,38 @@
+# File cấu hình của các trình soạn thảo code
+.vscode/
+.idea/
+
+# File tạm và file backup
+*.bak
+*~
+*.swp
+
+# Thư viện làm việc và file tạm của ModelSim / Questasim
+work/
+*.wlf
+*.mpf
+transcript
+vsim.wlf
+
+# File log và file tạm của các trình biên dịch khác
+*.log
+*.jou
+
+# Các thư mục và file do Vivado / Quartus tự sinh ra
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.srcs/
+*_project/
+*_results/
+*.bit
+*.bin
+*.mcs
+*.prm
+*.str
+webtalk*.html
+webtalk*.xml
+
+# File hệ điều hành (cho Mac)
+.DS_Store
