@@ -1,34 +1,31 @@
 module adder32(
-	input  logic [31:0] a,
-	input  logic [31:0] b,
-	input  logic 		  c_in,
-	output logic [31:0] sum,
-	output logic 		  c_out 
+    input  logic [31:0] a,
+    input  logic [31:0] b,
+    input  logic        c_in,      // 0: ADD, 1: SUB
+    output logic [31:0] sum,
+    output logic        c_out 
 );
-
-	logic [31:0] c_out_tmp;
-		//Create LSB and c_out_tmp
-		full_adder fa_0 (
-				.a (a[0]),
-				.b (b[0]^c_in),
-				.c_in (c_in),
-				.c_out (c_out_tmp[0]),
-				.s (sum[0])
-		);
-
-		//Instantiate 32 full_adder
-		genvar i;
-		generate 
-			for (i=1; i<32; i++) begin : adder32
-				full_adder fa_i (
-					.a (a[i]),
-					.b (b[i]^c_in),
-					.c_in (c_out_tmp[i-1]),
-					.c_out (c_out_tmp[i]),
-					.s (sum[i])
-				);
-			end
-		endgenerate
 	
-	assign c_out = c_out_tmp[31];
+	
+	logic [32:0] carry;
+   	logic [31:0] b_xor;
+	
+	// Selection ADD or SUB 
+    	assign b_xor = b ^ {32{c_in}};
+
+	// Carry in
+    	assign carry[0] = c_in;
+
+	// Array of 32 full adders
+   	 full_adder fa[31:0] (
+        .a(a),
+        .b(b_xor),
+        .c_in(carry[31:0]),
+        .s(sum),
+        .c_out(carry[32:1])
+    	);
+
+	// Carry đầu ra
+   	assign c_out = carry[32];
+    
 endmodule
